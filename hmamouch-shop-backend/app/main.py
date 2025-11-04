@@ -1,7 +1,7 @@
 from fastapi import FastAPI
 from .db import engine # to get the taxi vahicle 
 from .models import Base
-from .routers import users
+from .routers import users, products
 
 app = FastAPI(title="Hmamouch Shop Backend") # <- this creates the API or we can say the restaurant system that has all what we need to start the work.
 
@@ -13,6 +13,8 @@ Base.metadata.create_all(bind=engine)
 #and put it on the engine (the taxi vahicule) to be created at the end on the database 
 app.include_router(users.router)
 # we included the router on the main.py.
+app.include_router(products.router)
+# the same with products endpoints.
 
 
 @app.get("/") # is an endpoint for test only.
