@@ -4,6 +4,7 @@
 venv/
 env/
 .venv/
+shop/
 
 # ======================
 # Python cache files
