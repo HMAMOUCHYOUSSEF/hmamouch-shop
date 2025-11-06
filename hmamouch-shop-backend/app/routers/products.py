@@ -2,6 +2,7 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 from ..db import get_db
 from ..models import Product
+from ..auth import get_current_user
 
 router = APIRouter(prefix="/products", tags=["Products"])
 
@@ -11,15 +12,16 @@ def create_product(
     description: str,
     price: float,
     stock: int,
-    owner_id: int,
-    db: Session = Depends(get_db)
+    # owner_id: int, # we don't need it anymore so only signed users has acces to create a product
+    db: Session = Depends(get_db),
+    current_user = Depends(get_current_user)
 ):
     product = Product(
         name=name,
         description=description,
         price=price,
         stock=stock,
-        owner_id=owner_id
+        owner_id= current_user.id
     )
     db.add(product)
     db.commit()
